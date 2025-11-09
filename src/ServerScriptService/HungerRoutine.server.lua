@@ -1,12 +1,12 @@
-local PlayerModule = require(game.ServerStorage.Modules.PlayerModule)
-
 --- CONSTANTS
 local CORE_LOOP_INTERVAL = 2
 local HUNGER_DECREMENT = 1
 
 -- MEMBERS
+local PlayerModule = require(game.ServerStorage.Modules.PlayerModule)
 local PlayerLoaded:BindableEvent = game.ServerStorage.BindableEvents.PlayerLoaded
 local PlayerUnloaded:BindableEvent = game.ServerStorage.BindableEvents.PlayerUnloaded
+local PlayerHungerUpdated:RemoteEvent = game.ReplicatedStorage.Network.PlayerHungerUpdated
 
 local function coreLoop(player: Player)
     -- Where or not the routine should run
@@ -26,7 +26,9 @@ local function coreLoop(player: Player)
 
         local currentHunger = PlayerModule.GetHunger(player)
         PlayerModule.SetHunger(player, currentHunger - HUNGER_DECREMENT)
-        
+
+        -- Notify Client
+        PlayerHungerUpdated:FireClient(player, PlayerModule.GetHunger(player))
 
     
         wait(CORE_LOOP_INTERVAL)

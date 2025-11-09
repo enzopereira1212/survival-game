@@ -18,6 +18,18 @@ local PlayerLoaded:BindableEvent = game.ServerStorage.BindableEvents.PlayerLoade
 local PlayerUnloaded:BindableEvent = game.ServerStorage.BindableEvents.PlayerUnloaded
 
 
+--- Normalizes the hunger value
+local function normalizeHunger(hunger: number):number
+    if hunger < 0 then
+        hunger = 0
+    end
+
+    if hunger > 100 then
+        hunger = 100
+    end
+    return hunger
+end
+
 function PlayerModule.IsLoaded(player: Player): boolean
     local isLoaded = playersCached[player.UserId] and true or false
     return isLoaded
@@ -25,12 +37,16 @@ end
 
 --- Sets the hunger of given player
 function PlayerModule.SetHunger(player: Player, hunger: number)
+    hunger = normalizeHunger(hunger)
     playersCached[player.UserId].hunger = hunger
 end
 
 --- Gets the hunger of given player
 function PlayerModule.GetHunger(player: Player): number
-    return playersCached[player.UserId].hunger
+    
+   local hunger= normalizeHunger(playersCached[player.UserId].hunger)
+
+    return hunger
     
 end
 
