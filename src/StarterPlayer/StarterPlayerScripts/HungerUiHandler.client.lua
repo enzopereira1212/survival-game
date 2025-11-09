@@ -19,7 +19,7 @@ PlayerHungerUpdated.OnClientEvent:Connect(function(hunger: number)
     hungerBar.Size = UDim2.fromScale(hunger/100, hungerBar.Size.Y.Scale)
 
     -- Updates the bar's color according to the value
-    if hungerBar.Size.X.Scale > 0.75 then
+    if hungerBar.Size.X.Scale >= 0.45 then
         hungerBar.BackgroundColor3 = BAR_FULL_COLOR
     else
         hungerBar.BackgroundColor3 = BAR_LOW_COLOR

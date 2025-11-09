@@ -13,7 +13,7 @@ local function playEatingSound()
     local eatingSound = Instance.new('Sound', game:GetService('Workspace'))
     eatingSound.SoundId = EATING_SOUND_ID
     local random = Random.new()
-    local value = random:NextNumber(0.5, 1)
+    local value = random:NextNumber(0.8, 1)
 
     eatingSound.Pitch = value
     eatingSound.Parent = workspace
